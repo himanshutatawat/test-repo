@@ -1,0 +1,40 @@
+arch:
+  args:
+    num_classes: 10
+  type: ResNet50Model
+augmentation:
+  args: {}
+  type: Transforms
+data_loader:
+  args:
+    batch_size: 128
+    data_dir: data/MNIST/raw/
+    nworkers: 2
+    shuffle: true
+    validation_split: 0.1
+  type: DataLoader
+loss: nll_loss
+lr_scheduler:
+  args:
+    gamma: 0.1
+    step_size: 50
+  type: StepLR
+metrics:
+- top_1_acc
+- top_3_acc
+name: ResNet50-first-run
+optimizer:
+  args:
+    lr: 0.001
+    weight_decay: 0
+  type: Adam
+save_dir: saved/
+seed: 1234
+target_devices:
+- 0
+training:
+  early_stop: 10
+  epochs: 100
+  monitor: min val_loss
+  save_period: 1
+  tensorboard: true
